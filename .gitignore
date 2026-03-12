@@ -1,0 +1,8 @@
+.env
+venv/
+__pycache__/
+*.pyc
+spotify_classifier.db
+spotify_classifier.db-shm
+spotify_classifier.db-wal
+.cache
