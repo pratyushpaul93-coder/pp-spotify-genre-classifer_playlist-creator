@@ -127,9 +127,9 @@ def cache_set(
         ))
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 # Staging Area
-# ──────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 
 def staging_add(
     track_id: str,
@@ -178,8 +178,7 @@ def staging_remove_genre(genre_key: str):
     """Remove all staged tracks for a genre (called after playlist creation)."""
     with get_connection() as conn:
         conn.execute(
-            "DELETE FROM staging_tracks WHERE suggested_genre = ?", (genre_key,
-            )
+            "DELETE FROM staging_tracks WHERE suggested_genre = ?", (genre_key,)
         )
 
 
@@ -211,14 +210,14 @@ def genres_ready_for_playlist() -> list[dict]:
     return ready
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 # Playlist Registry
 # ─────────────────────────────────────────────────────────────────────────────
 
 def registry_get_all() -> list[dict]:
     """Return all known playlists."""
     with get_connection() as conn:
-        rows = conn.execute("SELECT * FROM playlist_registry ORDER BY ctreated_at").fetchall()
+        rows = conn.execute("SELECT * FROM playlist_registry ORDER BY created_at").fetchall()
     return [dict(row) for row in rows]
 
 
@@ -226,8 +225,7 @@ def registry_get(genre_key: str) -> dict | None:
     """Look up a playlist by genre key."""
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT * FROM playlist_registry WHERE genre_key = ?", (genre_key,
-            )
+            "SELECT * FROM playlist_registry WHERE genre_key = ?", (genre_key,)
         ).fetchone()
     return dict(row) if row else None
 
@@ -260,7 +258,7 @@ def registry_increment(genre_key: str, delta: int = 1):
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
-# ──────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 
 def _normalise(name: str) -> str:
     """Lowercase and strip whitespace for consistent cache keys."""
